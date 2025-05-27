@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #pokemon {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background: #d21994;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background: #d21994;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg" alt="Pokémon" id="pokemon">
+    <div class="buttons">
+        <button id="voltar" onclick="voltar()">Voltar -1</button>
+        <button id="adiantar" onclick="adiantar()">Adiantar +1</button>
+    </div>
+</body>
+</html>
+
+<script>
+        let id = 1;
+        const minId = 1;
+        const maxId = 100;
+        const img = document.getElementById('pokemon');
+        const btnVoltar = document.getElementById('voltar');
+        const btnAdiantar = document.getElementById('adiantar');
+
+        function atualizar() {
+            img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
+            btnVoltar.disabled = id <= minId;
+            btnAdiantar.disabled = id >= maxId;
+        }
+
+        function voltar() {
+            if (id > minId) {
+                id--;
+                atualizar();
+            }
+        }
+
+        function adiantar() {
+            if (id < maxId) {
+                id++;
+                atualizar();
+            }
+        }
+
+        atualizar();
+</script>

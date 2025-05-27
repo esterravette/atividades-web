@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+            background-color: #b17991;
+            color: white;
+            text-align: center;
+            padding: 16px 0;
+        }
+        main {
+            display: flex;
+        }
+        main section {
+            background-color: #e0b1c5;
+            width: 30%;
+            padding: 16px;
+        }
+        main section li {
+            list-style: none;
+        }
+        .fake-img {
+            width: 100%;
+            height: 200px;
+            background-color: #b4b4b4;
+            margin: 16px 0;
+        }
+        main article {
+            background-color: #ffe7f2;
+            padding: 16px;
+            width: 70%;
+        }
+        footer {
+            background-color: #b9859c;
+            color: white;
+            text-align: center;
+            padding: 16px 0;
+        }
+        footer span {
+            display: block;
+        }
+        @media (max-width: 400px) {
+            main {
+                flex-direction: column;
+            }
+            main section, main article {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Desenvolvimento de Software WEB</h1>
+    </header>
+    <main>
+        <section>
+            <li><a href="">Link 1</a></li>
+            <li><a href="">Link 2</a></li>
+            <li><a href="">Link 3</a></li>
+            <li><a href="">Link 4</a></li>
+        </section>
+        <article>
+            <h2>Introdução ao HTML</h2>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex ipsum voluptatem, maxime totam saepe maiores quia adipisci quisquam eligendi laboriosam odit facere ab obcaecati reprehenderit. Beatae excepturi labore quas eaque.</p>
+            <div class="fake-img"></div>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam facere nemo cumque et saepe quae doloribus excepturi dolores! Ab, laboriosam commodi vitae saepe aut nemo inventore reiciendis tempore sapiente tenetur.</p>
+            <div class="fake-img"></div>
+        </article>
+    </main>
+    <footer>
+        <span>taynaravette@alu.ufc.br</span>
+        <span>2025.1</span>
+        <span>&copy; Todos os direitos reservados</span>
+    </footer>
+</body>
+</html>
