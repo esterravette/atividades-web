@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Oasis</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .main-header {
+      background-color: #2c3e50;
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .main-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .main-header p {
+      font-size: 1.1rem;
+      font-style: italic;
+    }
+
+    .main-nav {
+      background-color: #34495e;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-item {
+      margin: 0;
+    }
+
+    .nav-link {
+      display: block;
+      color: #fff;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      text-align: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background-color: #5dade2;
+      color: #222;
+    }
+
+    #dark-mode-toggle {
+      margin: 0.7rem;
+      padding: 0.5rem 1rem;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    #dark-mode-toggle:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+    }
+
+    #dark-mode-toggle:active {
+      transform: translateY(0);
+    }
+
+    .content-row {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .main-aside {
+      flex: 0 0 30%;
+      background-color: #ecf0f1;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .main-aside h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+
+    .profile-image-container {
+      width: 100%;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #777;
+      font-style: italic;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .profile-image-container img,
+    .article-image-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 5px;
+    }
+
+    .aside-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .aside-section h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.7rem;
+      color: #2c3e50;
+    }
+
+    .aside-section p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .main-content {
+      flex: 0 0 calc(70% - 20px);
+      background-color: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .main-content article {
+      margin-bottom: 2rem;
+    }
+
+    .article-header {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .article-header h2 {
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin-bottom: 0.3rem;
+    }
+
+    .article-header p {
+      font-size: 0.9rem;
+      color: #777;
+      font-style: italic;
+    }
+
+    .article-image-container {
+      width: 100%;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #777;
+      font-style: italic;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .article-content p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .main-content h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .discography-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .discography-list li {
+      background-color: #f9f9f9;
+      margin-bottom: 10px;
+      padding: 15px;
+      border-left: 5px solid #2ecc71;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .discography-list li:hover {
+      transform: translateX(5px);
+      background-color: #e8f8f5;
+    }
+
+    .discography-list li strong {
+      color: #2c3e50;
+      font-size: 1.1em;
+    }
+
+    .discography-list li span {
+      display: block;
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .main-footer {
+      background-color: #34495e;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+
+    .dark-mode {
+      background-color: #333;
+      color: #f4f4f4;
+    }
+
+    .dark-mode .main-header {
+      background-color: #222;
+      color: #eee;
+    }
+
+    .dark-mode .main-nav {
+      background-color: #444;
+    }
+
+    .dark-mode .nav-link {
+      color: #eee;
+    }
+
+    .dark-mode .nav-link:hover {
+      background-color: #666;
+      color: #ddd;
+    }
+
+    .dark-mode #dark-mode-toggle {
+      background-color: #9b59b6;
+    }
+
+    .dark-mode #dark-mode-toggle:hover {
+      background-color: #8e44ad;
+    }
+
+    .dark-mode .main-aside {
+      background-color: #555;
+      color: #eee;
+      box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+    }
+
+    .dark-mode .main-aside h2,
+    .dark-mode .aside-section h3 {
+      color: #ddd;
+    }
+
+    .dark-mode .main-content {
+      background-color: #444;
+      color: #eee;
+      box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+    }
+
+    .dark-mode .article-header {
+      border-bottom-color: #666;
+    }
+
+    .dark-mode .article-header h2 {
+      color: #eee;
+    }
+
+    .dark-mode .article-header p {
+      color: #ccc;
+    }
+
+    .dark-mode .discography-list li {
+      background-color: #555;
+      border-left-color: #27ae60;
+      box-shadow: 0 1px 3px rgba(255,255,255,0.08);
+    }
+
+    .dark-mode .discography-list li:hover {
+      background-color: #666;
+    }
+
+    .dark-mode .discography-list li strong {
+      color: #eee;
+    }
+
+    .dark-mode .discography-list li span {
+      color: #ccc;
+    }
+
+    .dark-mode .main-footer {
+      background-color: #222;
+      color: #eee;
+    }
+
+    @media (max-width: 768px) {
+      .content-row {
+        flex-direction: column;
+      }
+
+      .main-aside,
+      .main-content {
+        flex: 0 0 100%;
+        margin-bottom: 1.5rem;
+      }
+
+      .main-nav .nav-list {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .main-nav .nav-item {
+        width: 100%;
+      }
+
+      #dark-mode-toggle {
+        width: 90%;
+        margin: 0.5rem auto;
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="main-header">
+    <h1>Oasis</h1>
+    <p>A banda que definiu uma geração do Britpop</p>
+  </header>
+
+  <nav class="main-nav">
+    <ul class="nav-list">
+      <li class="nav-item"><a href="#sobre" class="nav-link">Sobre o Oasis</a></li>
+      <li class="nav-item"><a href="#discografia" class="nav-link">Discografia</a></li>
+      <li class="nav-item"><a href="#membros" class="nav-link">Membros</a></li>
+      <li class="nav-item"><button id="dark-mode-toggle">Modo Escuro</button></li>
+    </ul>
+  </nav>
+
+  <div class="content-row">
+    <aside class="main-aside" id="sobre">
+      <section class="aside-section">
+        <h2>Quem é Oasis?</h2>
+        <div class="profile-image-container">
+          <img src="oasis-membros.jpg" alt="Membros da banda Oasis">
+        </div>
+        <p>Oasis foi uma das bandas mais proeminentes do movimento Britpop, nascida em Manchester, Inglaterra, em 1991. Liderada pelos irmãos Gallagher (Liam e Noel), a banda conquistou o mundo com seu som característico e uma atitude irreverente. Eles são amplamente considerados um dos maiores atos musicais britânicos de todos os tempos.</p>
+      </section>
+      <section class="aside-section">
+        <h3>Legado e Impacto</h3>
+        <p>Com hits atemporais e álbuns que venderam milhões, o Oasis deixou uma marca indelével na música. Sua influência pode ser sentida em diversas bandas que surgiram depois, e suas músicas continuam sendo hinos em estádios e bares ao redor do globo. É tipo a banda que você tem que ouvir pra entender o rock britânico dos anos 90, sabe?</p>
+      </section>
+    </aside>
+
+    <main class="main-content">
+      <article>
+        <header class="article-header">
+          <h2 id="discografia">Discografia Completa do Oasis</h2>
+        </header>
+        <div class="article-image-container">
+          <img src="oasis.webp" alt="Capa de álbum do Oasis">
+        </div>
+        <p>A discografia do Oasis é um tesouro de hinos do rock que transcenderam fronteiras e gerações. Cada álbum, com sua própria identidade, contribuiu para consolidar a banda como um dos pilares do Britpop e do rock alternativo. Vamos mergulhar nos detalhes de cada um deles:</p>
+
+        <h3>Álbuns de Estúdio:</h3>
+        <ul class="discography-list">
+          <li>
+            <strong>Definitely Maybe (1994)</strong>
+            <span>O estrondoso álbum de estreia que lançou o Oasis ao estrelato. Repleto de energia bruta e refrões pegajosos, inclui clássicos como "Supersonic", "Live Forever" e "Rock 'n' Roll Star". É tipo o TCC da banda, sabe? Onde tudo começou!</span>
+          </li>
+          <li>
+            <strong>(What's the Story) Morning Glory? (1995)</strong>
+            <span>Considerado por muitos como a obra-prima do Oasis e um dos álbuns mais vendidos da história britânica. Apresenta os megahits "Wonderwall", "Don't Look Back in Anger" e "Champagne Supernova". Esse aqui é o álbum que toca em qualquer festa boa, juro!</span>
+          </li>
+          <li>
+            <strong>Be Here Now (1997)</strong>
+            <span>O álbum mais aguardado na época, chegou com uma expectativa enorme. É grandioso, ambicioso e um pouco exagerado para alguns, mas tem momentos brilhantes como "D'You Know What I Mean?" e "Stand by Me". Imagina a pressão de lançar algo depois de um álbum como Morning Glory, né?</span>
+          </li>
+          <li>
+            <strong>Standing on the Shoulder of Giants (2000)</strong>
+            <span>Marcou uma mudança na sonoridade da banda, com influências mais psicodélicas e eletrônicas. Foi o primeiro álbum sem Bonehead e Guigsy. "Go Let It Out!" é um destaque. Pra mim, eles estavam experimentando, e é super normal depois de tanto sucesso.</span>
+          </li>
+          <li>
+            <strong>Heathen Chemistry (2002)</strong>
+            <span>Um retorno a um som mais direto e rock 'n' roll, com contribuições de composição de todos os membros. Contém "The Hindu Times" e "Stop Crying Your Heart Out". É tipo quando a gente volta para o básico depois de tentar umas loucuras, sabe?</span>
+          </li>
+          <li>
+            <strong>Don't Believe the Truth (2005)</strong>
+            <span>Amplamente elogiado como um retorno à forma da banda, com um som mais conciso e composições fortes. "Lyla" e "The Importance of Being Idle" são destaques. Tipo a gente no quinto semestre, mais maduro e com mais foco!</span>
+          </li>
+          <li>
+            <strong>Dig Out Your Soul (2008)</strong>
+            <span>O último álbum de estúdio do Oasis antes do seu hiato. Apresenta uma pegada mais psicodélica e groove, com faixas como "The Shock of the Lightning". Uma despedida que deixou um gostinho de quero mais...</span>
+          </li>
+        </ul>
+
+        <h3>Álbuns ao Vivo e Compilações Marcantes:</h3>
+        <ul class="discography-list">
+          <li>
+            <strong>Familiar to Millions (2000)</strong>
+            <span>Um registro ao vivo espetacular do show da banda no Estádio de Wembley. Captura a energia e a magnitude das performances do Oasis. Assistir esse show é quase como estar lá, sério!</span>
+          </li>
+          <li>
+            <strong>Stop the Clocks (2006)</strong>
+            <span>Uma coletânea essencial para quem quer os maiores sucessos e um panorama da carreira da banda até então. Perfeito pra quem tá começando a ouvir Oasis!</span>
+          </li>
+          <li>
+            <strong>Time Flies... 1994–2009 (2010)</strong>
+            <span>Uma coleção abrangente de todos os singles do Oasis, desde "Supersonic" até "Falling Down". É tipo um resumão da banda, perfeito pra botar no repeat.</span>
+          </li>
+        </ul>
+      </article>
+
+      <article>
+        <header class="article-header">
+          <h2 id="membros">Membros do Oasis</h2>
+          <p>Conheça os músicos que deram vida às canções</p>
+        </header>
+        <section>
+          <h3>Membros Essenciais:</h3>
+          <ul>
+            <li><strong>Liam Gallagher:</strong> Vocalista (1991–2009) - O cara com a voz inconfundível e a atitude que a gente ama.</li>
+            <li><strong>Noel Gallagher:</strong> Guitarrista, Tecladista, Vocal de Apoio, Compositor Principal (1991–2009) - O gênio por trás das letras e melodias que grudam na cabeça.</li>
+            <li><strong>Paul "Bonehead" Arthurs:</strong> Guitarrista Base (1991–1999) - A base sólida da guitarra rítmica, essencial no começo.</li>
+            <li><strong>Paul "Guigsy" McGuigan:</strong> Baixista (1991–1999) - O baixista que segurava a onda, super importante pra groove da banda.</li>
+            <li><strong>Alan White:</strong> Baterista (1995–2004) - A bateria potente que deu o ritmo de muitos dos maiores sucessos.</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Outros Contribuintes Notáveis:</h3>
+          <ul>
+            <li>Tony McCarroll: Baterista (1991–1995) - O baterista original.</li>
+            <li>Gem Archer: Guitarrista (1999–2009) - Entrou depois e mandou super bem na guitarra.</li>
+            <li>Andy Bell: Baixista (1999–2009) - Assumiu o baixo e trouxe um toque diferente.</li>
+            <li>Zak Starkey: Baterista (2004–2008) - Filho do Ringo Starr (Beatles!), tocou bateria por um tempo.</li>
+            <li>Chris Sharrock: Baterista (2008–2009) - O último baterista antes da banda dar um tempo.</li>
+          </ul>
+        </section>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const body = document.body;
+
+    function toggleDarkMode() {
+      body.classList.toggle('dark-mode');
+      const isDarkMode = body.classList.contains('dark-mode');
+      localStorage.setItem('dark-mode', isDarkMode);
+    }
+
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+
+    const savedDarkMode = localStorage.getItem('dark-mode');
+    if (savedDarkMode === 'true') {
+      body.classList.add('dark-mode');
+    }
+  </script>
+
+</body>
+</html>
