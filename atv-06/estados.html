@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>COVID-19 - Estados Brasileiros</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #fdfdfd;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    .acima-media {
+      background-color: #ffa4a4;
+    }
+
+    .maior-relacao {
+      background-color: #ffd490;
+    }
+
+    .menor-relacao {
+      background-color: #88e4a6;
+    }
+  </style>
+</head>
+<body>
+    
+  <h1>COVID-19 - Dados por Estados Brasileiros</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Estado</th>
+        <th>UF</th>
+        <th>Casos</th>
+        <th>Suspeitos</th>
+        <th>Mortes</th>
+      </tr>
+    </thead>
+    <tbody id="tabela-corpo"></tbody>
+    <tfoot id="tabela-rodape"></tfoot>
+  </table>
+
+  <script>
+    async function carregarEstados() {
+      try {
+        const resposta = await fetch("https://covid19-brazil-api.vercel.app/api/report/v1");
+        const json = await resposta.json();
+        const estados = json.data;
+
+        const corpo = document.getElementById("tabela-corpo");
+        const rodape = document.getElementById("tabela-rodape");
+
+        let somaCasos = 0;
+        let somaSuspeitos = 0;
+        let somaMortes = 0;
+
+        let maiorRelacao = null;
+        let menorRelacao = null;
+        let ufMaiorRelacao = '';
+        let ufMenorRelacao = '';
+
+        for (const estado of estados) {
+          somaCasos += estado.cases;
+          somaSuspeitos += estado.suspects;
+          somaMortes += estado.deaths;
+
+          if (estado.deaths > 0) {
+            const relacao = estado.cases / estado.deaths;
+
+            if (maiorRelacao === null || relacao > maiorRelacao) {
+              maiorRelacao = relacao;
+              ufMaiorRelacao = estado.uf;
+            }
+
+            if (menorRelacao === null || relacao < menorRelacao) {
+              menorRelacao = relacao;
+              ufMenorRelacao = estado.uf;
+            }
+          }
+        }
+
+        const mediaCasos = somaCasos / estados.length;
+        const mediaSuspeitos = somaSuspeitos / estados.length;
+        const mediaMortes = somaMortes / estados.length;
+
+        for (const estado of estados) {
+          const tr = document.createElement("tr");
+
+          if (estado.deaths > mediaMortes) {
+            tr.classList.add("acima-media");
+          }
+
+          if (estado.uf === ufMaiorRelacao) {
+            tr.classList.add("maior-relacao");
+          }
+
+          if (estado.uf === ufMenorRelacao) {
+            tr.classList.add("menor-relacao");
+          }
+
+          tr.innerHTML = `
+            <td>${estado.state}</td>
+            <td>${estado.uf}</td>
+            <td>${estado.cases}</td>
+            <td>${estado.suspects}</td>
+            <td>${estado.deaths}</td>
+          `;
+
+          corpo.appendChild(tr);
+        }
+
+        const trMedia = document.createElement("tr");
+        trMedia.innerHTML = `
+          <th>Médias</th>
+          <td>-</td>
+          <td>${mediaCasos.toFixed(2)}</td>
+          <td>${mediaSuspeitos.toFixed(2)}</td>
+          <td>${mediaMortes.toFixed(2)}</td>
+        `;
+        rodape.appendChild(trMedia);
+      } catch (erro) {
+        console.log("Erro ao carregar dados:", erro);
+      }
+    }
+
+    carregarEstados();
+  </script>
+</body>
+</html>

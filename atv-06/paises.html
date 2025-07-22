@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <title>COVID-19 - Países</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #fdfdfd;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        .brasil {
+            background-color: #fff3b0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>COVID-19 - Dados por País</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>País</th>
+                <th>Casos</th>
+                <th>Casos Confirmados</th>
+                <th>Mortes</th>
+                <th>Recuperados</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-paises-corpo"></tbody>
+    </table>
+
+    <script>
+        async function carregarDadosPaises() {
+            const apiUrl = "https://covid19-brazil-api.vercel.app/api/report/v1/countries";
+            const corpoTabela = document.getElementById("tabela-paises-corpo");
+
+            try {
+                const resposta = await fetch(apiUrl);
+                const json = await resposta.json();
+                const paises = json.data;
+
+                corpoTabela.innerHTML = '';
+
+                for (const pais of paises) {
+                    const tr = document.createElement("tr");
+
+                    if (pais.country.toLowerCase() === "brazil") {
+                        tr.classList.add("brasil");
+                    }
+                    
+                    tr.innerHTML = `
+                        <td>${pais.country}</td>
+                        <td>${pais.cases}</td>
+                        <td>${pais.confirmed}</td>
+                        <td>${pais.deaths}</td>
+                        <td>${pais.recovered}</td>
+                    `;
+
+                    corpoTabela.appendChild(tr);
+                }
+            } catch (erro) {
+                console.error("Erro ao carregar dados:", erro);
+                corpoTabela.innerHTML = `<tr><td colspan="5">Não foi possível carregar os dados.</td></tr>`;
+            }
+        }
+
+        carregarDadosPaises();
+    </script>
+
+</body>
+</html>
